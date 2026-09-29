@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* one variable drives the whole post card: every inner size is in em */
+  --cw: clamp(150px, min(27svh, 40vw), 260px);
+  --ink: #111111;
+}
+
+html { background: #F7F5EE; }
+/* display face is single-weight Arial Black; 900 keeps fallbacks chunky too */
+.font-display { font-weight: 900; }
+body { @apply bg-paper text-ink font-body antialiased; overflow-x: hidden; }
+
+@layer components {
+  /* ---------- off-white graph-paper grid (static, never repaints) ---------- */
+  .grid-bg {
+    background-color: #F7F5EE;
+    background-image:
+      linear-gradient(rgba(17,17,17,.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(17,17,17,.09) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* ---------- pills + chunky retro buttons ---------- */
+  .pill {
+    border: 3px solid var(--ink);
+    border-radius: 9999px;
+    background: #fff;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: .7em 1.3em;
+    border: 3px solid var(--ink);
+    border-radius: 9999px;
+    background: #FFE500;
+    color: var(--ink);
+    font-family: "Arial Black", "Archivo Black", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px; line-height: 1; font-weight: 900;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+  .btn:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--ink); }
+  .btn:focus-visible, .nav-link:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .btn-white { background: #fff; }
+  .btn-pink { background: #FF8FC7; }
+
+  /* ---------- stat cards ---------- */
+  .stat-card {
+    border: 3px solid var(--ink);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .hl { background: linear-gradient(transparent 50%, #FFE500 50%); padding: 0 .1em; }
+  .bar-track {
+    height: .8rem; border: 3px solid var(--ink); border-radius: 9999px;
+    background: #fff; overflow: hidden;
+  }
+  .bar-fill { height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); }
+
+  /* ---------- Instagram-style post card (neo-brutalist) ---------- */
+  .scene { perspective: 1200px; }
+  .post {
+    position: relative;
+    width: var(--cw);
+    font-size: calc(var(--cw) / 16);
+    padding: .9em;
+    background: #fff;
+    color: var(--ink);
+    border: .22em solid var(--ink);
+    border-radius: 1.1em;
+    box-shadow: .5em .5em 0 var(--ink);
+    will-change: transform;
+  }
+  .post-head { display: flex; align-items: center; gap: .6em; }
+  .story { position: relative; width: 2.7em; height: 2.7em; flex: none; }
+  .story-ring {
+    position: absolute; inset: 0; border-radius: 9999px;
+    background: conic-gradient(#FFE500 0 25%, #FF8FC7 0 50%, #8FD3FF 0 75%, #111 0);
+    border: .16em solid var(--ink);
+    will-change: transform;
+  }
+  .story-avatar {
+    position: absolute; inset: .28em; border-radius: 9999px;
+    background: var(--ink); border: .16em solid #fff;
+    display: grid; place-items: center;
+    color: #fff; font-weight: 800; font-size: .9em;
+  }
+  .handle { font-weight: 800; line-height: 1.1; }
+  .sub { font-size: .75em; color: #555; }
+
+  .media {
+    margin-top: .8em;
+    aspect-ratio: 1 / 1;
+    border: .18em solid var(--ink);
+    border-radius: .7em;
+    background-color: #FFE500;
+    background-image: radial-gradient(rgba(17,17,17,.28) .09em, transparent .1em);
+    background-size: .9em .9em;
+    display: flex; align-items: flex-end; gap: .55em;
+    padding: .8em .8em 0;
+    overflow: hidden;
+  }
+  .bar {
+    flex: 1;
+    background: #fff;
+    border: .18em solid var(--ink); border-bottom: 0;
+    border-radius: .35em .35em 0 0;
+    transform-origin: bottom;
+    will-change: transform;
+  }
+  .bar:last-child { background: #FF8FC7; }
+
+  .actions { display: flex; align-items: center; gap: .7em; margin-top: .8em; }
+  .icon { width: 1.5em; height: 1.5em; flex: none; }
+  .heart { position: relative; width: 1.5em; height: 1.5em; flex: none; }
+  .heart > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+  /* rolling counters: a tall column translated inside a one-line window */
+  .roll { overflow: hidden; height: 1.3em; }
+  .roll > div { will-change: transform; }
+  .roll span { display: block; height: 1.3em; line-height: 1.3em; }
+  .likes { margin-top: .5em; font-weight: 800; display: flex; gap: .3em; }
+  .caption { margin-top: .15em; font-size: .85em; line-height: 1.3; }
+
+  /* ---------- SEO result chip ---------- */
+  .serp {
+    position: absolute;
+    right: -1.4em; top: -1.7em;
+    width: 12.4em;
+    display: flex; gap: .7em; align-items: center;
+    padding: .65em .8em;
+    background: #fff;
+    border: .2em solid var(--ink);
+    border-radius: .9em;
+    box-shadow: .35em .35em 0 var(--ink);
+  }
+  .rank {
+    flex: none; width: 2.6em; height: 2.6em;
+    border: .16em solid var(--ink);
+    border-radius: .6em;
+    background: #FFE500; color: var(--ink);
+    font-weight: 900; font-size: 1.05em;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .rank .roll { height: 1.6em; }
+  .rank .roll span { height: 1.6em; line-height: 1.6em; }
+  .serp-url { font-size: .68em; color: #0B8043; font-weight: 700; }
+  .serp-title { font-size: .85em; font-weight: 800; color: #1A0DAB; line-height: 1.15; text-decoration: underline; }
+}
