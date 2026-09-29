@@ -8,7 +8,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const WORD = "WELCOME"; // followed by the ITZFIZZ logo on its yellow pill
 const LOGO = {
-  src: "/itzfizz-logo.png",
+  src:
+    process.env.NODE_ENV === "production"
+      ? "/Scroll-Driven-Hero/itzfizz-logo.png"
+      : "/itzfizz-logo.png",
   w: 1400,
   h: 388,
 };
