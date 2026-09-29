@@ -7,7 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const WORD = "WELCOME"; // followed by the ITZFIZZ logo on its yellow pill
-const LOGO = { src: "/itzfizz-logo.png", w: 1400, h: 388 };
+const LOGO = {
+  src: "/itzfizz-logo.png",
+  w: 1400,
+  h: 388,
+};
 
 const STATS = [
   { value: 87, text: "increase in organic search traffic", color: "#FF8FC7" },

@@ -1,3 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = { reactStrictMode: true };
+const nextConfig = {
+  output: "export",
+  basePath: "/Scroll-Driven-Hero",
+  images: {
+    unoptimized: true,
+  },
+};
+
 export default nextConfig;
